@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hjy.oa.entity.User">
+        <id name="uid">
+            <generator class="native"/>
+        </id>
+        <property name="name"/>
+        <property name="loginname"/>
+        <property name="password"/>
+        <property name="sex"/>
+        <property name="telnum"/>
+        <property name="email"/>
+        <!--User表与Department表中的did的多对一关系-->
+        <many-to-one name="department" column="departmemntId"  class="com.hjy.oa.entity.Department"/>
+        <!--User表与Position表的多对多关系-->
+        <set name="positionSet" table="user_position">
+            <key column="userId"></key>
+            <many-to-many class="com.hjy.oa.entity.Position" column="positionId"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
