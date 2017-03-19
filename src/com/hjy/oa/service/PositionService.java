@@ -13,4 +13,10 @@ public interface PositionService  {
     List<Position> findAll();
 
     void add(Position position);
+
+    void del(Position position);
+
+    Position findById(int pid);
+
+    void edit(Position position);
 }

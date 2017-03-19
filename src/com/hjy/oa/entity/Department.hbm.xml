@@ -15,7 +15,7 @@
             <one-to-many class="com.hjy.oa.entity.User"></one-to-many>
         </set>
         <!--Department表与Department的多对一关系-->
-        <many-to-one name="parent" column="parentid"  class="com.hjy.oa.entity.Department"/>
+        <many-to-one name="parent" column="parentid" cascade="all" class="com.hjy.oa.entity.Department"/>
         <set name="children">
             <key column="parentid"></key>
             <one-to-many class="com.hjy.oa.entity.Department" ></one-to-many>

@@ -31,4 +31,21 @@ public class PositionServiceImpl  implements PositionService{
     public void add(Position position) {
         positionDao.add(position);
     }
+
+    @Override
+    public void edit(Position position) {
+
+        positionDao.update(position);
+    }
+
+    @Override
+    public Position findById(int pid) {
+        return positionDao.findById(pid);
+    }
+
+    @Override
+    public void del(Position position) {
+
+        positionDao.del(position);
+    }
 }
