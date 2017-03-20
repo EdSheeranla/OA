@@ -15,25 +15,10 @@ import java.util.List;
  */
 @Component("departmentServiceImpl")
 @Transactional
-public class DepartmentServiceImpl implements DepartmentService{
-    private DepartmentDao departmentDao;
-    @Resource
-    public void setDepartmentDao(DepartmentDao departmentDao) {
-        this.departmentDao = departmentDao;
-    }
-
+public class DepartmentServiceImpl extends BaseDaoImpl<Department> implements DepartmentService{
     @Override
-    public List<Department> findAll() {
-        return departmentDao.findAll();
-    }
-
-    @Override
-    public Department finById(int parentid) {
-        return departmentDao.findById(parentid);
-    }
-
-    @Override
-    public void add(Department department) {
-        departmentDao.add(department);
+    public void del(int did) {
+        Department department=findById(did);
+        del(department);
     }
 }

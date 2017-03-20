@@ -1,14 +1,10 @@
 package com.hjy.oa.action;
 
 import com.hjy.oa.entity.Department;
-import com.hjy.oa.service.DepartmentService;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,51 +12,44 @@ import java.util.List;
  */
 @Component("departmentAction")
 @Scope("prototype")
-public class DepartmentAction extends ActionSupport implements ModelDriven<Department> {
-    private DepartmentService departmentService;
+public class DepartmentAction extends BasicAction<Department>{
     private int parentid;
 
     public void setParentid(int parentid) {
         this.parentid = parentid;
     }
 
-    @Resource
-    public void setDepartmentService(DepartmentService departmentService) {
-        this.departmentService = departmentService;
-    }
-
-    private Department department = new Department();
-
     public String list() {
-        findAll();
+        findAllDepartment();
         return "list";
     }
 
     public String addUI() {
-        findAll();
+        findAllDepartment();
         return "addUI";
     }
 
-    private void findAll() {
-        List<Department> departmentList = departmentService.findAll();
-        ActionContext.getContext().getValueStack().set("departmentList", departmentList);
-    }
 
     public String add() {
-        Department parent=departmentService.finById(parentid);
-        department.setParent(parent);
-        departmentService.add(department);
+        Department parent=departmentService.findById(parentid);
+        model.setParent(parent);
+        departmentService.add(model);
         return "tolist";
     }
 
+    /**
+     * 这里需要进行级联删除
+     */
+    public String del(){
+        departmentService.del(model.getDid());
+
+        return "tolist";
+    }
     public String editUI(){
-        Department editDepartment=departmentService.finById(department.getDid());
-        findAll();
+        Department editDepartment=departmentService.findById(model.getDid());
+        findAllDepartment();
         ActionContext.getContext().getValueStack().set("editDepartment",editDepartment);
         return "editUI";
     }
-    @Override
-    public Department getModel() {
-        return department;
-    }
+
 }

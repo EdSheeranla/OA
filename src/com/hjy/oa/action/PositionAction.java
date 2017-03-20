@@ -15,54 +15,44 @@ import javax.annotation.Resource;
  */
 @Component("positionAction")
 @Scope("prototype")
-public class PositionAction extends ActionSupport implements ModelDriven<Position> {
-    private PositionService positionService;
-    private Position position=new Position();
+public class PositionAction extends BasicAction<Position>{
 
     public String list(){
-        java.util.List<Position> positionList=positionService.findAll();
-        ActionContext.getContext().getValueStack().set("positionList",positionList);
+        findAllPosition();
         return "list";
     }
+
+
 
     public String addUI(){
         return "addUI";
     }
 
     public String add(){
-        if(position==null){
+        if(model==null){
             this.addActionError("提交表单不能为空");
             return "addUI";
         }
-        positionService.add(position);
+        positionService.add(model);
         return "tolist";
     }
 
     public String del(){
 
-        positionService.del(position);
+        positionService.del(model);
 
         return "tolist";
     }
 
     public String editUI(){
-        Position editPosition=positionService.findById(position.getPid());
+        Position editPosition=positionService.findById(model.getPid());
         ActionContext.getContext().getValueStack().set("editPosition",editPosition);
         return "editUI";
     }
 
     public String edit(){
 
-        positionService.edit(position);
+        positionService.update(model);
         return "tolist";
-    }
-    @Resource
-    public void setPositionService(PositionService positionService) {
-        this.positionService = positionService;
-    }
-
-    @Override
-    public Position getModel() {
-        return position;
     }
 }

@@ -8,15 +8,13 @@ import java.util.List;
 /**
  * Created by sheeran on 2017/3/17.
  */
-public interface PositionService  {
+public interface PositionService  extends BaseDao<Position>{
 
-    List<Position> findAll();
+//    List<Position> findAll();
+//
+//    void add(Position position);
+//
+//    void del(Position position);
 
-    void add(Position position);
 
-    void del(Position position);
-
-    Position findById(int pid);
-
-    void edit(Position position);
 }

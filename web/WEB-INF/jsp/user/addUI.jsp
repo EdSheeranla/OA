@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 	<title>用户信息</title>
@@ -22,8 +23,8 @@
 <!--显示表单内容-->
 <div id=MainArea>
 
-    <s:form action="userAction_%{id == null ? 'add' : 'edit'}">
-    	<s:hidden name="id"></s:hidden>
+    <s:form action="user_%{id == null ? 'add' : 'edit'}">
+    	<s:hidden name="uid"></s:hidden>
     
         <div class="ItemBlock_Title1"><!-- 信息说明 --><div class="ItemBlock_Title1">
         	<img border="0" width="4" height="7" src="${pageContext.request.contextPath}/style/blue/images/item_point.gif" /> 用户信息 </div> 
@@ -36,14 +37,16 @@
                     <tr>
                     	<td width="100">所属部门</td>
                         <td>
-                            <s:select name="departmentId" cssClass="SelectStyle"
-                            	list="#departmentList" listKey="id" listValue="name"
-                            	headerKey="" headerValue="请选择部门">
-                            </s:select>
+                            <select name="did" class="SelectStyle" >
+                                <option >请选择部门</option>
+                                <c:forEach items="${departmentList}" var="department">
+                                <option name="did" value="${department.did}">${department.name}</option>
+                                </c:forEach>
+                            </select>
                         </td>
                     </tr>
                     <tr><td>登录名</td>
-                        <td><s:textfield name="loginName" cssClass="InputStyle"/> *
+                        <td><s:textfield name="loginname" cssClass="InputStyle"/> *
 							（登录名要唯一）
 						</td>
                     </tr>
@@ -55,11 +58,11 @@
                         	<%-- 
 								<s:radio name="gender" list="#{'男':'男', '女':'女'}"></s:radio>
                         	--%>
-							<s:radio name="gender" list="%{ {'男', '女'} }"></s:radio>
+							<s:radio name="sex" list="%{ {'男', '女'} }"></s:radio>
 						</td>
                     </tr>
 					<tr><td>联系电话</td>
-                        <td><s:textfield name="phoneNumber" cssClass="InputStyle"/></td>
+                        <td><s:textfield name="telnum" cssClass="InputStyle"/></td>
                     </tr>
                     <tr><td>E-mail</td>
                         <td><s:textfield name="email" cssClass="InputStyle"/></td>
@@ -82,10 +85,12 @@
                     <tr>
 						<td width="100">岗位</td>
                         <td>
-                        	<s:select name="roleIds" cssClass="SelectStyle"
-                        		multiple="true" size="10" 
-                        		list="#roleList" listKey="id" listValue="name">
-                            </s:select>
+                        	<select name="pids" class="SelectStyle"
+                        		multiple="true" size="10">
+                                <c:forEach items="${positionList}" var="position">
+                                <option name="pid" value="${position.pid}">${position.name}</option>
+                                </c:forEach>
+                            </select>
 							按住Ctrl键可以多选或取消选择
                         </td>
                     </tr>

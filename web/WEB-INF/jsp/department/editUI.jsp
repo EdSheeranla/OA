@@ -40,7 +40,7 @@
                             <option value="">请选择部门</option>
                             <c:forEach items="${departmentList}" var="department">
 
-                                    <c:if test="${empty department.parent.did}">
+                                    <c:if test="${empty department.parent.did &&department.did !=editDepartment.did}">
 
                                         <option value="${department.did}">┠${department.name}</option>
 

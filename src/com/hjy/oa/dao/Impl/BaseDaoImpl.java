@@ -3,6 +3,7 @@ package com.hjy.oa.dao.Impl;
 import com.hjy.oa.dao.BaseDao;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.lang.reflect.ParameterizedType;
@@ -13,6 +14,7 @@ import java.util.List;
  * 基础Dao 实现了增删改查功能
  */
 @Component("baseDaoImpl")
+@Transactional
 public abstract class BaseDaoImpl<T> implements BaseDao<T>{
     private HibernateTemplate hibernateTemplate;
     private Class<T> clazz;

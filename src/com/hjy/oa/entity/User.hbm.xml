@@ -13,8 +13,9 @@
         <property name="sex"/>
         <property name="telnum"/>
         <property name="email"/>
+        <property name="description"/>
         <!--User表与Department表中的did的多对一关系-->
-        <many-to-one name="department" column="departmemntId"  class="com.hjy.oa.entity.Department"/>
+        <many-to-one name="department" column="departmentId"  class="com.hjy.oa.entity.Department"/>
         <!--User表与Position表的多对多关系-->
         <set name="positionSet" table="user_position">
             <key column="userId"></key>

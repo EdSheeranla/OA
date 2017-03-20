@@ -14,7 +14,17 @@ public class User {
     private String telnum;
     private String email;
     private String sex;
-    private Set<Position> positionSet=new HashSet<Position>();
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    private Set<Position> positionSet = new HashSet<Position>();
     private Department department;
 
     public int getUid() {

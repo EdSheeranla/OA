@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <html>
 <head>
@@ -34,25 +35,25 @@
         <!--显示数据列表-->
         <tbody id="TableData" class="dataContainer" datakey="userList">
         
-        <s:iterator value="#userList"> 
+        <c:forEach items="${userList}" var="user">
             <tr class="TableDetail1 template">
-                <td>${loginName}&nbsp;</td>
-                <td>${name}&nbsp;</td>
-                <td>${department.name}&nbsp;</td>
+                <td>${user.loginname}&nbsp;</td>
+                <td>${user.name}&nbsp;</td>
+                <td>${user.department.name}&nbsp;</td>
                 <td>
-                	<s:iterator value="roles">
-                		${name}&nbsp;
-                	</s:iterator>
+                	<c:forEach items="${user.positionSet}" var="position">
+                		${position.name}&nbsp;
+                	</c:forEach>
                 	&nbsp;
                 </td>
-                <td>${description}&nbsp;</td>
+                <td>${user.description}&nbsp;</td>
                 <td>
-                	<s:a action="userAction_delete?id=%{id}" onclick="return delConfirm()">删除</s:a>
-                    <s:a action="userAction_editUI?id=%{id}">修改</s:a>
-					<s:a action="userAction_initPassword?id=%{id}" onclick="return window.confirm('您确定要初始化密码为1234吗？')">初始化密码</s:a>
+                	<a href="${pageContext.request.contextPath}/user_del?uid=${user.uid}" onclick="return delConfirm()">删除</a>
+                    <a href="${pageContext.request.contextPath}/user_editUI?uid=${user.uid}">修改</a>
+					<a href="${pageContext.request.contextPath}/user_initPassword?uid=${user.uid}" onclick="return window.confirm('您确定要初始化密码为1234吗？')">初始化密码</a>
                 </td>
             </tr>
-        </s:iterator> 
+        </c:forEach>
             
         </tbody>
     </table>
@@ -60,7 +61,7 @@
     <!-- 其他功能超链接 -->
     <div id="TableTail">
         <div id="TableTail_inside">
-            <s:a action="userAction_addUI"><img src="${pageContext.request.contextPath}/style/images/createNew.png" /></s:a>
+            <s:a action="user_addUI"><img src="${pageContext.request.contextPath}/style/images/createNew.png" /></s:a>
         </div>
     </div>
 </div>

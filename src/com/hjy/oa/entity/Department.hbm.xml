@@ -3,20 +3,20 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.hjy.oa.entity.Department">
+    <class name="com.hjy.oa.entity.Department" >
         <id name="did">
             <generator class="native"/>
         </id>
         <property name="name"/>
         <property name="description"/>
         <!--Department表和User表的一对多关系-->
-        <set name="userSet">
-            <key column="uid"></key>
+        <set name="userSet" >
+            <key column="departmentId"></key>
             <one-to-many class="com.hjy.oa.entity.User"></one-to-many>
         </set>
         <!--Department表与Department的多对一关系-->
-        <many-to-one name="parent" column="parentid" cascade="all" class="com.hjy.oa.entity.Department"/>
-        <set name="children">
+        <many-to-one name="parent" column="parentid"  cascade="all" class="com.hjy.oa.entity.Department"/>
+        <set name="children" cascade="all-delete-orphan">
             <key column="parentid"></key>
             <one-to-many class="com.hjy.oa.entity.Department" ></one-to-many>
         </set>

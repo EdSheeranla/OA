@@ -39,8 +39,8 @@
 				<td>${department.parent.name}&nbsp;</td>
 				<td>${department.description}&nbsp;</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/department_del?did=${did}" onclick="return window.confirm('这将删除所有的下级部门，您确定要删除吗？')">删除</a>
-					<a action="${pageContext.request.contextPath}/department_editUI?did=${did}">修改</a>
+					<a href="${pageContext.request.contextPath}/department_del?did=${department.did}" onclick="return window.confirm('这将删除所有的下级部门，您确定要删除吗？')">删除</a>
+					<a href="${pageContext.request.contextPath}/department_editUI?did=${department.did}">修改</a>
 				</td>
 			</tr>
         </c:forEach>
