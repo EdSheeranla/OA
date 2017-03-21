@@ -13,5 +13,10 @@
             <key column="positionId"></key>
             <many-to-many column="userId" class="com.hjy.oa.entity.Department" ></many-to-many>
         </set>
+        <!--和privilege表之间的映射-->
+        <set name="privilegeSet" table="position_privilege">
+            <key column="privilegeId"></key>
+            <one-to-many class="com.hjy.oa.entity.Privilege"></one-to-many>
+        </set>
     </class>
 </hibernate-mapping>

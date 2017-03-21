@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -18,7 +19,7 @@
 
     <ul id="MenuUl">
 		<%-- 顶级菜单 --%>
-		<s:iterator value="#application.topPrivilegeList">
+		<c:forEach items="#application.topPrivilegeList">
 		<s:if test="#session.user.hasPrivilegeByName(name)">
 	        <li class="level1">
 	            <div onClick="menuClick(this);" class="level1Style">
@@ -40,7 +41,7 @@
 	            </ul>
 	        </li>
         </s:if>
-		</s:iterator>        
+		</c:forEach>
     </ul>
     
 </div>

@@ -46,8 +46,8 @@
                         </td>
                     </tr>
                     <tr><td>登录名</td>
-                        <td><s:textfield name="loginname" cssClass="InputStyle"/> *
-							（登录名要唯一）
+                        <td><input id="loginname" name="loginname" onblur="checkUserName()" class="InputStyle"/>*
+							（登录名要唯一）<span id="span1"></span>
 						</td>
                     </tr>
                     <tr><td>姓名</td>
@@ -116,5 +116,22 @@
 	6，修改用户信息时，登录名不可修改。
 </div>
 
+<script>
+    function checkUserName(){
+        var loginname=document.getElementById("loginname").value;
+        var httpRequest=new XMLHttpRequest();
+        httpRequest.onreadystatechange = function(){
+            if(httpRequest.readyState == 4){
+                if(httpRequest.status == 200){
+                    //当返回成功并且status为200的时候，设置返回的文本
+                    document.getElementById("span1").innerHTML = httpRequest.responseText;
+                }
+            }
+        };
+        httpRequest.open("get","/oa/user_check.action"+"?timestamp="+new Date().getTime()+"&loginname="+loginname);
+        httpRequest.send(null);
+    }
+
+</script>
 </body>
 </html>

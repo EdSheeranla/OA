@@ -4,14 +4,20 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
         <package name="oa" namespace="/" extends="struts-default">
+            <action name="home_*" method="{1}" class="com.hjy.oa.action.HomeAction">
+                <result name="{1}">/WEB-INF/jsp/home/{1}.jsp</result>
+            </action>
+
             <action name="position_*" class="com.hjy.oa.action.PositionAction" method="{1}">
                 <result name="{1}">/WEB-INF/jsp/position/{1}.jsp</result>
                 <result name="tolist" type="redirectAction">position_list.action</result>
             </action>
+
             <action name="user_*" class="com.hjy.oa.action.UserAction" method="{1}">
                 <result name="{1}">/WEB-INF/jsp/user/{1}.jsp</result>
                 <result name="tolist" type="redirectAction">user_list.action</result>
             </action>
+
             <action name="department_*" class="com.hjy.oa.action.DepartmentAction" method="{1}">
                 <result name="{1}">/WEB-INF/jsp/department/{1}.jsp</result>
                 <result name="tolist" type="redirectAction">department_list.action</result>

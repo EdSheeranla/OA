@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hjy.oa.entity.Privilege">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="name"/>
+        <property name="icon"/>
+        <property name="url"/>
+        <!--privilege表之间的映射，子表对应父表-->
+        <many-to-one name="parent" column="parentId" class="com.hjy.oa.entity.Privilege" />
+        <set name="positionSet" table="position_privilege">
+            <key column="positionId"></key>
+            <one-to-many class="com.hjy.oa.entity.Position"></one-to-many>
+        </set>
+
+        <!--自身表之间的映射，父表对应子表-->
+        <set name="children">
+            <key column="parentId"></key>
+            <one-to-many class="com.hjy.oa.entity.Privilege"></one-to-many>
+        </set>
+    </class>
+    
+</hibernate-mapping>

@@ -11,6 +11,15 @@ public class Position {
     private String name;
     private String description;
     private Set<User> userSet=new HashSet<User>();
+    private Set<Privilege> privilegeSet=new HashSet<Privilege>();
+
+    public Set<Privilege> getPrivilegeSet() {
+        return privilegeSet;
+    }
+
+    public void setPrivilegeSet(Set<Privilege> privilegeSet) {
+        this.privilegeSet = privilegeSet;
+    }
 
     public int getPid() {
         return pid;

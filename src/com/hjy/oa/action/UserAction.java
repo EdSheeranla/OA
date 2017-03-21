@@ -4,8 +4,11 @@ import com.hjy.oa.entity.Department;
 import com.hjy.oa.entity.Position;
 import com.hjy.oa.entity.User;
 import com.hjy.oa.util.Mymd5;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 /**
  * Created by sheeran on 2017/3/18.
@@ -24,8 +27,10 @@ public class UserAction extends BasicAction<User> {
     public void setDid(int did) {
         this.did = did;
     }
+
     /**
      * 向完成基础的添加操作，AJAX的异步校验之后在添加
+     *
      * @return
      */
     public String add() {
@@ -37,10 +42,13 @@ public class UserAction extends BasicAction<User> {
         return "tolist";
     }
 
-    public String initPassword(){
-        generatePassword();
+    public String initPassword() {
+        User user=userService.findById(model.getUid());
+        user.setPassword(Mymd5.doMD5("1234"));
+        userService.update(user);
         return "tolist";
     }
+
     //初始化密码为1234;
     private void generatePassword() {
         model.setPassword(Mymd5.doMD5("1234"));
@@ -57,7 +65,7 @@ public class UserAction extends BasicAction<User> {
     }
 
     private void setPositionSet() {
-        String[] pidstr = pids.split("\\, ");
+        String[] pidstr = pids.split(", ");
         for (String pid : pidstr) {
             System.out.println(pid);
             Position position = positionService.findById(Integer.parseInt(pid));
@@ -84,6 +92,22 @@ public class UserAction extends BasicAction<User> {
         findAllUser();
         return "list";
     }
+
+    public String check() throws IOException {
+        String loginname = model.getLoginname();
+        User user = userService.checkloginname(loginname);
+        if (user == null) {
+            ServletActionContext.getResponse().getWriter().print("<font color='green'>登录名可以使用</font>");
+        } else {
+            try {
+                ServletActionContext.getResponse().getWriter().print("<font color='red'>登录名已经被使用</font>");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return NONE;
+    }
+
     public String edit() {
         return "tolist";
     }
