@@ -8,4 +8,6 @@ import com.hjy.oa.entity.User;
  */
 public interface UserService  extends BaseDao<User>{
     User checkloginname(String loginname);
+
+    User loginCheck(User model);
 }

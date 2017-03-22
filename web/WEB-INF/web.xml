@@ -12,6 +12,11 @@
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
+    <!--则会个监听器没有效果-->
+    <!--<listener>-->
+        <!--<listener-class>com.hjy.oa.listener.ServletContextListener</listener-class>-->
+    <!--</listener>-->
+
     <!--配置OpensSessionInView-->
     <filter>
         <filter-name>openSessionInViewFilter</filter-name>

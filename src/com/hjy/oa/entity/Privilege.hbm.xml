@@ -14,11 +14,11 @@
         <many-to-one name="parent" column="parentId" class="com.hjy.oa.entity.Privilege" />
         <set name="positionSet" table="position_privilege">
             <key column="positionId"></key>
-            <one-to-many class="com.hjy.oa.entity.Position"></one-to-many>
+            <many-to-many class="com.hjy.oa.entity.Position"></many-to-many>
         </set>
 
         <!--自身表之间的映射，父表对应子表-->
-        <set name="children">
+        <set name="children" order-by="id">
             <key column="parentId"></key>
             <one-to-many class="com.hjy.oa.entity.Privilege"></one-to-many>
         </set>

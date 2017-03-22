@@ -12,6 +12,8 @@
     <context:annotation-config></context:annotation-config>
     <context:component-scan base-package="com.hjy.oa"/>
 
+
+
     <!--配置c3p0datasource-->
     <bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${driverClass}"/>
@@ -28,6 +30,7 @@
                 <value>com/hjy/oa/entity/User.hbm.xml</value>
                 <value>com/hjy/oa/entity/Department.hbm.xml</value>
                 <value>com/hjy/oa/entity/Position.hbm.xml</value>
+                <value>com/hjy/oa/entity/Privilege.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">

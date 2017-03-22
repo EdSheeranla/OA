@@ -11,6 +11,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <jsp:forward page="${pageContext.request.contextPath}/user_loginUI.action"/>
   </body>
 </html>

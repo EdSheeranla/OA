@@ -2,13 +2,17 @@ package com.hjy.oa.action;
 
 import com.hjy.oa.entity.Department;
 import com.hjy.oa.entity.Position;
+import com.hjy.oa.entity.Privilege;
 import com.hjy.oa.entity.User;
 import com.hjy.oa.util.Mymd5;
+import com.opensymphony.xwork2.ActionContext;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletContext;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by sheeran on 2017/3/18.
@@ -93,6 +97,10 @@ public class UserAction extends BasicAction<User> {
         return "list";
     }
 
+    /**
+     *  AJAX异步校验用户名是否可用
+     * @throws IOException
+     */
     public String check() throws IOException {
         String loginname = model.getLoginname();
         User user = userService.checkloginname(loginname);
@@ -108,6 +116,28 @@ public class UserAction extends BasicAction<User> {
         return NONE;
     }
 
+    /**
+     * 用户的登陆登出操作
+     */
+    public String loginUI(){
+        return "loginUI";
+    }
+    public String login(){
+        String password = model.getPassword();
+        model.setPassword(Mymd5.doMD5(password));
+        User user = userService.loginCheck(model);
+        if(user==null){
+            this.addActionError("用户名或者密码错误");
+            return "loginUI";
+        }
+        ActionContext.getContext().getSession().put("user",user);
+        return "login";
+
+    }
+    public String logout(){
+        ActionContext.getContext().getSession().remove("user");
+        return "logout";
+    }
     public String edit() {
         return "tolist";
     }
