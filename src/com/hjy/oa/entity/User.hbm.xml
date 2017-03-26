@@ -17,7 +17,7 @@
         <!--User表与Department表中的did的多对一关系-->
         <many-to-one name="department" column="departmentId"  class="com.hjy.oa.entity.Department"/>
         <!--User表与Position表的多对多关系-->
-        <set name="positionSet" table="user_position">
+        <set name="positionSet" table="user_position" lazy="false">
             <key column="userId"></key>
             <many-to-many class="com.hjy.oa.entity.Position" column="positionId"></many-to-many>
         </set>

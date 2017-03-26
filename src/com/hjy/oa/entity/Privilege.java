@@ -1,5 +1,6 @@
 package com.hjy.oa.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,19 +8,19 @@ import java.util.Set;
  * Created by sheeran on 2017/3/20.
  * 权限实体
  */
-public class Privilege {
+public class Privilege implements Serializable {
     private int id;
     private String url;
     private String name;
     private String icon;
-    private Set<Position> positionSet= new HashSet<Position>();
+    private Set<Position> positionSet = new HashSet<Position>();
     private Privilege parent;
-    private Set<Privilege> children =new HashSet<Privilege>();
+    private Set<Privilege> children = new HashSet<Privilege>();
 
     public Privilege() {
     }
 
-    public Privilege(String name,String url,  String icon, Privilege parent) {
+    public Privilege(String name, String url, String icon, Privilege parent) {
         this.url = url;
         this.name = name;
         this.icon = icon;

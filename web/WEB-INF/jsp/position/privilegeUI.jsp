@@ -7,9 +7,11 @@
     <title>岗位列表</title>
     <%@ include file="/WEB-INF/jsp/public/common.jspf" %>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <script language="javascript" src="${pageContext.request.contextPath}/script/jquery_treeview/jquery.treeview.js"></script>
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/style/blue/file.css" />
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/script/jquery_treeview/jquery.treeview.css" />
+    <script language="javascript"
+            src="${pageContext.request.contextPath}/script/jquery_treeview/jquery.treeview.js"></script>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/style/blue/file.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="${pageContext.request.contextPath}/script/jquery_treeview/jquery.treeview.css"/>
     <script type="text/javascript">
     </script>
 </head>
@@ -28,6 +30,8 @@
 
 <div id="MainArea">
     <!-- 表单内容显示 -->
+    <s:form action="position_savePrivilege.action" method="post">
+    <s:hidden name="pid"></s:hidden>
     <div class="ItemBlockBorder">
         <div class="ItemBlock">
             <table cellpadding="0" cellspacing="0" class="mainForm">
@@ -37,7 +41,7 @@
                     <td width="300px" style="padding-left: 7px;">
                         <!-- 全选 -->
                         <input type="checkbox" id="cbSelectAll"
-                               onClick="$('[name=privilegeBox]').attr('checked', this.checked)"/>
+                               onClick="$('[name=privilegeIds]').attr('checked', this.checked)"/>
                         <label for="cbSelectAll">全选</label>
                     </td>
                 </tr>
@@ -48,42 +52,47 @@
                 <tr class="TableDetail1">
                     <!-- 显示权限树 -->
                     <td>
-                        <%--使用树状结构来显示权限分配--%>
-                        <ul id="tree">
-                            <c:forEach items="${privilegeList}" var="privilege">
-                                <%--一级权限--%>
-                                <c:if test="${empty privilege.parent}">
-                                    <li><input type="checkbox" id="privilegeBox${privilege.id}" value="${privilege.id}"
-                                               name="privilegeBox">
-                                        <label for="privilegeBox${privilege.id}">${privilege.name}</label>
-                                    <%--二级权限--%>
-                                    <ul >
-                                    <c:forEach items="${privilege.children}" var="child">
-                                        <li><input type="checkbox" id="privilegeBox${child.id}" value="${child.id}"
-                                                   name="privilegeBox">
-                                            <label for="privilegeBox${child.id}">${child.name}</label>
-                                        <%--三级权限--%>
-                                        <ul >
-                                            <c:forEach items="${child.children}" var="next">
+                            <%--使用树状结构来显示权限分配--%>
+                                <ul id="root">
+                                        <%-- 第一级 --%>
+                                    <s:iterator value="#topPrivilegeList">
+                                        <li>
 
-                                                <li><input type="checkbox" id="privilegeBox${next.id}" value="${next.id}"
-                                                           name="privilegeBox">
-                                                    <label for="privilegeBox${next.id}">${next.name}</label></li>
-                                            </c:forEach>
-                                        </ul>
-
-                                    </c:forEach>
+                                            <input type="checkbox" name="privilegeIds" value="${id}" id="cb_${id}" <s:property value="%{id in privilegeIds ? 'checked' : ''}"/> >
+                                            <label for="cb_${id}"><span class="folder">${name}</span></label>
+                                            <ul>
+                                                    <%-- 第二级 --%>
+                                                <s:iterator value="children">
+                                                    <li>
+                                                        <input type="checkbox" name="privilegeIds" value="${id}" id="cb_${id}" <s:property value="%{id in privilegeIds ? 'checked' : ''}"/> >
+                                                        <label for="cb_${id}"><span class="folder">${name}</span></label>
+                                                        <ul>
+                                                                <%-- 第三级 --%>
+                                                            <s:iterator value="children">
+                                                                <li>
+                                                                    <input type="checkbox" name="privilegeIds" value="${id}" id="cb_${id}" <s:property value="%{id in privilegeIds ? 'checked' : ''}"/> >
+                                                                    <label for="cb_${id}"><span class="folder">${name}</span></label>
+                                                                </li>
+                                                            </s:iterator>
+                                                        </ul>
+                                                    </li>
+                                                </s:iterator>
+                                            </ul>
                                         </li>
+                                    </s:iterator>
                                 </ul>
-                                    </li>
-                                </c:if>
-                            </c:forEach>
-                        </ul>
 
                     </td>
                 </tr>
                 </tbody>
             </table>
+            <div id="InputDetailBar">
+                <input type="image" src="${pageContext.request.contextPath}/style/images/save.png"/>
+                <a href="javascript:history.go(-1);"><img
+                        src="${pageContext.request.contextPath}/style/images/goBack.png"/></a>
+            </div>
+            </s:form>
+            <s:debug/>
         </div>
     </div>
 </div>
@@ -106,26 +115,26 @@
 <script>
     <%--控制js代码当文档加载完成之后在开始进行加载--%>
     $(function () {
-        $("#tree").treeview()
+        $("#root").treeview()
     });
-    $(function() {
-       $("[name=privilegeBox]").click(function () {
-           $(this).siblings("ul").find("input").attr("checked",this.checked);
-            if(this.checked){
-                $(this).parents("li").children("input").attr("checked",true);
+    $(function () {
+        $("[name=privilegeIds]").click(function () {
+            $(this).siblings("ul").find("input").attr("checked", this.checked);
+            if (this.checked) {
+                $(this).parents("li").children("input").attr("checked", true);
                 //取消某一个元素的时候，需要进行判断，是否还有同级元素被选中，否则直接上级元素取消选中
-            }else{
-                if($(this).parent().siblings("li").children("input:checked").size()==0){
-                    $(this).parent().parent().siblings("input").attr("checked",false);
-                    var start=$(this).parent().parent();
+            } else {
+                if ($(this).parent().siblings("li").children("input:checked").size() == 0) {
+                    $(this).parent().parent().siblings("input").attr("checked", false);
+                    var start = $(this).parent().parent();
 
-                    if( start.parent().siblings("li").children("input:checked").size() == 0 ){
+                    if (start.parent().siblings("li").children("input:checked").size() == 0) {
                         start.parent().parent().siblings("input").attr("checked", false);
                     }
                 }
             }
 
-       });
+        });
     });
 
 </script>

@@ -1,6 +1,7 @@
 package com.hjy.oa.dao.Impl;
 
 import com.hjy.oa.dao.BaseDao;
+import com.hjy.oa.entity.Privilege;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,4 +57,6 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
     public List<T> findAll() {
         return (List<T>) hibernateTemplate.find("from "+clazz.getSimpleName());
     }
+
+
 }

@@ -24,7 +24,7 @@
             <form action="${pageContext.request.contextPath}/user_login.action" method="post">
                 <table BORDER=0 CELLSPACING=0 CELLPADDING=0 width=100%>
                     <tr>
-                        <td colspan="3"><!-- 显示错误 -->
+                        <td colspan="3"><s:actionerror/>
                             <font color="red"></font>
                         </td>
                     </tr>

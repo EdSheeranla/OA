@@ -1,9 +1,14 @@
 package com.hjy.oa.action;
 
 import com.hjy.oa.entity.Position;
+import com.hjy.oa.entity.Privilege;
 import com.opensymphony.xwork2.ActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by sheeran on 2017/3/17.
@@ -11,14 +16,14 @@ import org.springframework.stereotype.Component;
 @Component("positionAction")
 @Scope("prototype")
 public class PositionAction extends BasicAction<Position> {
-    private int[] privilege;
+    private int[] privilegeIds;
 
-    public int[] getPrivilege() {
-        return privilege;
+    public int[] getPrivilegeIds() {
+        return privilegeIds;
     }
 
-    public void setPrivilege(int[] privilege) {
-        this.privilege = privilege;
+    public void setPrivilegeIds(int[] privilegeIds) {
+        this.privilegeIds = privilegeIds;
     }
 
     public String list() {
@@ -47,7 +52,6 @@ public class PositionAction extends BasicAction<Position> {
 
     public String editUI() {
         Position editPosition = positionService.findById(model.getPid());
-        ActionContext.getContext().getValueStack().set("editPosition", editPosition);
         return "editUI";
     }
 
@@ -57,7 +61,31 @@ public class PositionAction extends BasicAction<Position> {
     }
 
     public String privilegeUI() {
-        findAllPrivilege();
+        Position position = positionService.findById(model.getPid());
+        ActionContext.getContext().put("position", position);
+
+        List<Privilege> topPrivilegeList = privilegeService.findAllTop();
+        ActionContext.getContext().put("topPrivilegeList", topPrivilegeList);
+
+        // 准备回显的数据
+        privilegeIds = new int[position.getPrivilegeSet().size()];
+        int index = 0;
+        for (Privilege privilege : position.getPrivilegeSet()) {
+            privilegeIds[index++] = privilege.getId();
+        }
         return "privilegeUI";
+    }
+
+    public String savePrivilege() {
+//        System.out.println(model.getPid());
+        Position position = positionService.findById(model.getPid());
+        List<Privilege> privilegeList = new ArrayList<Privilege>();
+        for (int id : privilegeIds) {
+            Privilege privilege = privilegeService.findById(id);
+            privilegeList.add(privilege);
+        }
+        position.setPrivilegeSet(new HashSet<Privilege>(privilegeList));
+        positionService.update(position);
+        return "tolist";
     }
 }

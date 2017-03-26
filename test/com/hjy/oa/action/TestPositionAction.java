@@ -19,4 +19,8 @@ public class TestPositionAction {
         PositionService positionService= (PositionService) ac.getBean("positionServiceImpl");
         positionService.add(position);
     }
+    @Test
+    public void testSetPrivilege(){
+        PositionAction positionAction= (PositionAction) ac.getBean("positionAction");
+    }
 }

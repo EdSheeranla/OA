@@ -11,5 +11,6 @@ import java.util.List;
 public interface PrivilegeService extends BaseDao<Privilege> {
 
     List<Privilege> findAllTop();
-    
+
+    List<Privilege> findAllTopByName(String loginname);
 }

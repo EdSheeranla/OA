@@ -12,6 +12,8 @@ public class ServiceTest {
     private ApplicationContext ac=new ClassPathXmlApplicationContext("applicationContext.xml");
     @Test
     public void testEntity(){
+//        ForumManageService forumManageService= (ForumManageService) ac.getBean("forumManageServiceImpl");
+//        forumManageService.findAll();
         SessionFactory sessionFactory= (SessionFactory) ac.getBean("SessionFactory");
         System.out.println(sessionFactory);
     }

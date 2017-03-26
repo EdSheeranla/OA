@@ -23,6 +23,7 @@
                 <!--<param name="includeMethods">loginUI</param>-->
             <!--</interceptor-ref>-->
             <result name="{1}">/WEB-INF/jsp/user/{1}.jsp</result>
+            <result name="loginfail" type="redirectAction">user_loginUI.action</result>
             <result name="tolist" type="redirectAction">user_list.action</result>
             <result name="login" type="redirectAction">home_index.action</result>
         </action>
@@ -32,5 +33,9 @@
             <result name="tolist" type="redirectAction">department_list.action</result>
         </action>
 
+        <action name="forumManage_*" class="com.hjy.oa.action.ForumManageAction" method="{1}">
+            <result name="{1}">/WEB-INF/jsp/forumManage/{1}.jsp</result>
+            <result name="tolist" type="redirectAction">forumManage_list.action</result>
+        </action>
     </package>
 </struts>

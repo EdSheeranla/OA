@@ -19,22 +19,23 @@
 
     <ul id="MenuUl">
         <%-- 顶级菜单 --%>
-        <c:forEach items="${topPrivilegeList}" var="topPrivilege">
+        <c:forEach items="${allUserPrivilegeList}" var="userPrivilege">
+            <c:if test="${empty userPrivilege.parent}" >
             <%--<s:if test="#session.user.hasPrivilegeByName(name)">--%>
             <li class="level1">
                 <div onClick="menuClick(this);" class="level1Style">
-                    <img src="style/images/MenuIcon/${topPrivilege.icon}" class="Icon"/>
-                        ${topPrivilege.name}
+                    <img src="style/images/MenuIcon/${userPrivilege.icon}" class="Icon"/>
+                        ${userPrivilege.name}
                 </div>
                     <%-- 二级菜单 display: none; --%>
                 <ul style="" class="MenuLevel2">
-                    <c:forEach items="${topPrivilege.children}" var="secondPrivilege">
+                    <c:forEach items="${userPrivilege.children}" var="secondPrivilege">
                         <%--<s:if test="#session.user.hasPrivilegeByName(name)">--%>
                         <li class="level2">
                         <div class="level2Style" onClick="menuClick(this);">
                             <img src="style/images/MenuIcon/menu_arrow_single.gif"/>
                             <a target="right"
-                               href="${pageContext.request.contextPath}${secondPrivilege.url}.action"> ${secondPrivilege.name}</a>
+                               href="${pageContext.request.contextPath}/${secondPrivilege.url}.action"> ${secondPrivilege.name}</a>
                         </div>
                         <%--增加三级菜单--%>
                         <%--<c:forEach items="${secondPrivilege.children}" var="thirdPrivilege">--%>
@@ -52,6 +53,7 @@
                 </ul>
             </li>
             <%--</s:if>--%>
+            </c:if>
         </c:forEach>
     </ul>
 

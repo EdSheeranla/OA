@@ -1,12 +1,13 @@
 package com.hjy.oa.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * Created by sheeran on 2017/3/17.
  */
-public class User {
+public class User implements Serializable {
     private int uid;
     private String name;
     private String loginname;

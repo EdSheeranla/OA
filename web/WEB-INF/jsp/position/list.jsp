@@ -48,7 +48,7 @@
 				<td>
 					<a href="${pageContext.request.contextPath}/position_del.action?pid=${position.pid}" onclick="return delConfirm()">删除</a>
 					<a href="${pageContext.request.contextPath}/position_editUI.action?pid=${position.pid}">修改</a>
-					<a href="${pageContext.request.contextPath}/position_privilegeUI.action">设置权限</a>
+					<a href="${pageContext.request.contextPath}/position_privilegeUI.action?pid=${position.pid}">设置权限</a>
 				</td>
 			</tr>
         </c:forEach>

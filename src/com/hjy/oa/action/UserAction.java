@@ -126,9 +126,10 @@ public class UserAction extends BasicAction<User> {
         String password = model.getPassword();
         model.setPassword(Mymd5.doMD5(password));
         User user = userService.loginCheck(model);
+        ServletActionContext.getRequest().getSession().getId();
         if(user==null){
             this.addActionError("用户名或者密码错误");
-            return "loginUI";
+            return "loginfail";
         }
         ActionContext.getContext().getSession().put("user",user);
         return "login";

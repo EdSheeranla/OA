@@ -12,13 +12,13 @@
         <property name="url"/>
         <!--privilege表之间的映射，子表对应父表-->
         <many-to-one name="parent" column="parentId" class="com.hjy.oa.entity.Privilege" />
-        <set name="positionSet" table="position_privilege">
-            <key column="positionId"></key>
-            <many-to-many class="com.hjy.oa.entity.Position"></many-to-many>
+        <set name="positionSet" table="position_privilege" >
+            <key column="privilegeId"></key>
+            <many-to-many class="com.hjy.oa.entity.Position" column="positionId"></many-to-many>
         </set>
 
         <!--自身表之间的映射，父表对应子表-->
-        <set name="children" order-by="id">
+        <set name="children" order-by="id" lazy="false">
             <key column="parentId"></key>
             <one-to-many class="com.hjy.oa.entity.Privilege"></one-to-many>
         </set>

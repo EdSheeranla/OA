@@ -4,10 +4,7 @@ import com.hjy.oa.entity.Department;
 import com.hjy.oa.entity.Position;
 import com.hjy.oa.entity.Privilege;
 import com.hjy.oa.entity.User;
-import com.hjy.oa.service.DepartmentService;
-import com.hjy.oa.service.PositionService;
-import com.hjy.oa.service.PrivilegeService;
-import com.hjy.oa.service.UserService;
+import com.hjy.oa.service.*;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -34,6 +31,9 @@ public class BasicAction<T> extends ActionSupport implements ModelDriven {
 
     @Resource
     protected PrivilegeService privilegeService;
+
+    @Resource
+    protected ForumManageService forumManageService;
 
     protected T model;
 
@@ -68,7 +68,6 @@ public class BasicAction<T> extends ActionSupport implements ModelDriven {
 
     protected void findAllPrivilege(){
         List<Privilege> privilegeList=privilegeService.findAll();
-        System.out.println(privilegeList.get(0).getChildren().size());
         ActionContext.getContext().getValueStack().set("privilegeList",privilegeList);
     }
 
