@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hjy.oa.entity.Topic">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <!--由继承而得到的属性-->
+        <property name="content" type="text" length="65535"/>
+        <property name="emoji"/>
+        <property name="ipAddres"/>
+        <property name="pushTime" type="timestamp"/>
+        <property name="title"/>
+        <many-to-one name="author" class="com.hjy.oa.entity.User" column="authorid"/>
+
+        <property name="lasetUpdate" type="timestamp"/>
+        <property name="replyCount"/>
+        <property name="type"/>
+        <many-to-one name="forum" column="forumid" class="com.hjy.oa.entity.Forum"/>
+        <set name="replySet">
+            <!--这里是对应的外键-->
+            <key column="replyId"></key>
+            <one-to-many class="com.hjy.oa.entity.Reply"/>
+        </set>
+        <!--这里的one-to-one关系采用了对应外键的many-to-one关系来进行代替-->
+        <many-to-one name="lastReply" class="com.hjy.oa.entity.Reply" unique="true"/>
+    </class>
+</hibernate-mapping>

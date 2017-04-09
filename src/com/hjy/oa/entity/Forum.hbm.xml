@@ -10,5 +10,12 @@
         <property name="name"/>
         <property name="description"/>
         <property name="position"/>
+        <property name="articleCount"/>
+        <property name="topicCount"/>
+        <set name="topicSet">
+            <key column="id"></key>
+            <one-to-many class="com.hjy.oa.entity.Topic"/>
+        </set>
+        <many-to-one  name="lastTopic"  column="lastTopicId" class="com.hjy.oa.entity.Topic" />
     </class>
 </hibernate-mapping>

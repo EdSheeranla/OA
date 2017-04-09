@@ -37,5 +37,9 @@
             <result name="{1}">/WEB-INF/jsp/forumManage/{1}.jsp</result>
             <result name="tolist" type="redirectAction">forumManage_list.action</result>
         </action>
+
+        <action name="forum_*" class="com.hjy.oa.action.ForumAction" method="{1}">
+            <result name="{1}">/WEB-INF/jsp/forum/{1}.jsp</result>
+        </action>
     </package>
 </struts>

@@ -35,6 +35,11 @@ public class BasicAction<T> extends ActionSupport implements ModelDriven {
     @Resource
     protected ForumManageService forumManageService;
 
+    @Resource
+    protected ForumService forumService;
+
+    @Resource
+    protected TopicService topicService;
     protected T model;
 
     public BasicAction() {
@@ -71,6 +76,7 @@ public class BasicAction<T> extends ActionSupport implements ModelDriven {
         ActionContext.getContext().getValueStack().set("privilegeList",privilegeList);
     }
 
+//    protected  void findAll
     @Override
     public Object getModel() {
         return model;

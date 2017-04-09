@@ -14,7 +14,7 @@
             <many-to-many column="userId" class="com.hjy.oa.entity.Department" ></many-to-many>
         </set>
         <!--和privilege表之间的映射-->
-        <set name="privilegeSet" table="position_privilege" lazy="false">
+        <set name="privilegeSet" table="position_privilege" order-by="privilegeId" lazy="false">
             <key column="positionId"></key>
             <many-to-many class="com.hjy.oa.entity.Privilege" column="privilegeId"></many-to-many>
         </set>

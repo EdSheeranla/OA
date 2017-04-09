@@ -24,7 +24,6 @@ public class HomeAction extends BasicAction<Privilege>{
      */
     public String index(){
 
-
         return "index";
     }
     public String bottom(){
@@ -36,17 +35,13 @@ public class HomeAction extends BasicAction<Privilege>{
      * @return
      */
     public String left() {
+        if( ServletActionContext.getServletContext().getAttribute("allUserPrivilegeList")!=null){
+            return "left";
+        }
         User user = (User) ActionContext.getContext().getSession().get("user");
-    //        这个权限管理还没有做
-//            List<Privilege> topPrivilegeList=privilegeService.findAllTopByName(user.getLoginname());
-//        Set<Position> positionSet=user.getPositionSet();
-//        for(Position postion : positionSet){
-//            postion.getPrivilegeSet();
-//            Privilege privilege=new Privilege();
-//
-//        }
         List<Privilege> topPrivilegeList=privilegeService.findAllTop();
         Set<Privilege> allUserPrivilege=new HashSet<Privilege>();
+
         for(Position position:user.getPositionSet()){
             allUserPrivilege=position.getPrivilegeSet();
         }

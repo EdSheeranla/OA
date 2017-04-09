@@ -31,6 +31,9 @@
                 <value>com/hjy/oa/entity/Department.hbm.xml</value>
                 <value>com/hjy/oa/entity/Position.hbm.xml</value>
                 <value>com/hjy/oa/entity/Privilege.hbm.xml</value>
+                <value>com/hjy/oa/entity/Article.hbm.xml</value>
+                <value>com/hjy/oa/entity/Topic.hbm.xml</value>
+                <value>com/hjy/oa/entity/Reply.hbm.xml</value>
                 <value>com/hjy/oa/entity/Forum.hbm.xml</value>
             </list>
         </property>
