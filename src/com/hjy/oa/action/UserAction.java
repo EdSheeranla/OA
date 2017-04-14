@@ -12,7 +12,10 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sheeran on 2017/3/18.
@@ -32,16 +35,10 @@ public class UserAction extends BasicAction<User> {
         this.did = did;
     }
 
-    /**
-     * 向完成基础的添加操作，AJAX的异步校验之后在添加
-     *
-     * @return
-     */
     public String add() {
-
         setDepartment();
         setPositionSet();
-        generatePassword();
+        model.setPassword(Mymd5.doMD5("1234"));
         userService.add(model);
         return "tolist";
     }
@@ -53,18 +50,9 @@ public class UserAction extends BasicAction<User> {
         return "tolist";
     }
 
-    //初始化密码为1234;
-    private void generatePassword() {
-        model.setPassword(Mymd5.doMD5("1234"));
-    }
 
     private void setDepartment() {
         Department department = departmentService.findById(did);
-        /**
-         * 这里添加和保存顺序？同样这里不需要添加和保存
-         * org.hibernate.PersistentObjectException : uninitialized proxy passed to save()；
-         * 这里错误的原因是由于数据库的mapping有问题
-         */
         model.setDepartment(department);
     }
 
@@ -73,16 +61,12 @@ public class UserAction extends BasicAction<User> {
         for (String pid : pidstr) {
             System.out.println(pid);
             Position position = positionService.findById(Integer.parseInt(pid));
-            /**
-             * 这里添加和保存顺序？ 这里不需要添加和保存，贼蠢
-             */
             model.getPositionSet().add(position);
         }
     }
 
     /**
      * 这里需要查出所有的岗位和部门
-     *
      * @return
      */
     public String addUI() {
@@ -123,22 +107,67 @@ public class UserAction extends BasicAction<User> {
         return "loginUI";
     }
     public String login(){
-        String password = model.getPassword();
-        model.setPassword(Mymd5.doMD5(password));
+        model.setPassword(Mymd5.doMD5(model.getPassword()));
         User user = userService.loginCheck(model);
-        ServletActionContext.getRequest().getSession().getId();
         if(user==null){
             this.addActionError("用户名或者密码错误");
             return "loginfail";
+        }else{
+            if(isExist(user)) {
+                this.addActionError("不能重复登陆");
+                return "loginfail";
+            }
+            addOnlineNum(user);
+            ActionContext.getContext().getSession().put("user",user);
+            return "login";
+
         }
-        ActionContext.getContext().getSession().put("user",user);
-        return "login";
 
     }
+
+    /**
+     * 采用抢占式的用户防止重复登陆
+     * 对于当前登陆用户是否已经登陆了进行校验,将用户的登陆姓名和登陆时间保存
+     * 但是和显示当前登陆的用户名称这个功能右冲突
+     * @param user
+     * @return
+     */
+    private boolean isExist(User user){
+
+        User existUser = (User) ActionContext.getContext().getSession().get("user");
+        if(existUser==null) return false;
+        else {
+            if (existUser.getLoginname().equals(user.getLoginname())) return true;
+            else return false;
+        }
+    }
+    private void addOnlineNum(User user) {
+        Map<String,Date> onlineUser = new HashMap<String,Date>();
+        onlineUser.put(user.getLoginname(),new Date());
+        ServletActionContext.getServletContext().setAttribute("onlineUser",onlineUser);
+//        Object attr=ServletActionContext.getServletContext().getAttribute("onlineNum");
+//
+//        if(attr!=null)    ServletActionContext.getServletContext().setAttribute("onlineNum",(int)attr+1);
+//        else              ServletActionContext.getServletContext().setAttribute("onlineNum",1);
+    }
+
     public String logout(){
         ActionContext.getContext().getSession().remove("user");
+        lessOnlineNum();
         return "logout";
     }
+
+    /**
+     * 更改在线人数，但是这里有一个bug，同一个用户多次进行登陆的时候，在线人数就会混乱
+     * 怎样识别同一个电脑上登陆了两个不同的用户：采用Session，第二个登陆的y用户会将前一个用户的session进行覆盖
+     */
+    private void lessOnlineNum(){
+
+        int onlineNum= (int) ServletActionContext.getServletContext().getAttribute("onlineNum");
+        System.out.println(onlineNum);
+        ServletActionContext.getServletContext().setAttribute("onlineNum",onlineNum-1);
+    }
+
     public String edit() {
         return "tolist";
     }

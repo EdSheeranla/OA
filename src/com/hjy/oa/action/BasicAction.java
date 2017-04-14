@@ -40,6 +40,9 @@ public class BasicAction<T> extends ActionSupport implements ModelDriven {
 
     @Resource
     protected TopicService topicService;
+
+    @Resource
+    protected ReplyService replyService;
     protected T model;
 
     public BasicAction() {
@@ -57,9 +60,10 @@ public class BasicAction<T> extends ActionSupport implements ModelDriven {
     }
 
     protected void findAllPosition() {
-        java.util.List<Position> positionList=positionService.findAll();
-        ActionContext.getContext().getValueStack().set("positionList",positionList);
+        java.util.List<Position> positionList = positionService.findAll();
+        ActionContext.getContext().getValueStack().set("positionList", positionList);
     }
+
     protected void findAllDepartment() {
         List<Department> departmentList = departmentService.findAll();
         ActionContext.getContext().getValueStack().set("departmentList", departmentList);
@@ -67,16 +71,20 @@ public class BasicAction<T> extends ActionSupport implements ModelDriven {
 
 
     protected void findAllUser() {
-        List<User> userList=userService.findAll();
-        ActionContext.getContext().getValueStack().set("userList",userList);
+        List<User> userList = userService.findAll();
+        ActionContext.getContext().getValueStack().set("userList", userList);
     }
 
-    protected void findAllPrivilege(){
-        List<Privilege> privilegeList=privilegeService.findAll();
-        ActionContext.getContext().getValueStack().set("privilegeList",privilegeList);
+    protected void findAllPrivilege() {
+        List<Privilege> privilegeList = privilegeService.findAll();
+        ActionContext.getContext().getValueStack().set("privilegeList", privilegeList);
     }
 
-//    protected  void findAll
+    protected User getCurrentUser() {
+        return (User) ActionContext.getContext().getSession().get("user");
+    }
+
+    //    protected  void findAll
     @Override
     public Object getModel() {
         return model;

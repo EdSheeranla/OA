@@ -33,19 +33,23 @@
 
 
     <!--用来启动 log4jConfigLocation的servlet -->
-    <context-param>
-        <param-name>webAppRootKey</param-name>
-        <param-value>spring.root</param-value>
-    </context-param>
-    <context-param>
-        <param-name>log4jConfigLocation</param-name>
-        <param-value>log4j.properties</param-value>
-    </context-param>
-    <context-param>
-        <param-name>log4jRefreshInterval</param-name>
-        <param-value>30000</param-value>
-    </context-param>
-
+    <!--<context-param>-->
+        <!--<param-name>webAppRootKey</param-name>-->
+        <!--<param-value>spring.root</param-value>-->
+    <!--</context-param>-->
+    <!--<context-param>-->
+        <!--<param-name>log4jConfigLocation</param-name>-->
+        <!--<param-value>log4j.properties</param-value>-->
+    <!--</context-param>-->
+    <!--<context-param>-->
+        <!--<param-name>log4jRefreshInterval</param-name>-->
+        <!--<param-value>30000</param-value>-->
+    <!--</context-param>-->
+    <!--<listener>-->
+        <!--<listener-class>-->
+            <!--org.springframework.web.util.Log4jConfigListener-->
+        <!--</listener-class>-->
+    <!--</listener>-->
 
     <!--加入编码的过滤器-->
     <filter>

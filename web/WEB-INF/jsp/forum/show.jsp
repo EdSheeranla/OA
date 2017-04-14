@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <html>
 <head>
@@ -41,7 +43,7 @@
 			<font class="MenuPoint"> &gt; </font>
 			${forum.name}
 			<span style="margin-left:30px;">
-				<s:a action="topicAction_addUI?forumId=%{#forum.id}">
+				<s:a action="topic_addUI?forumId=%{#forum.id}">
 					<img align="absmiddle" src="${pageContext.request.contextPath}/style/blue/images/button/publishNewTopic.png"/>
 				</s:a>
 			</span>
@@ -69,29 +71,31 @@
 				<!--主题列表-->
 				<tbody class="dataContainer" datakey="topicList">
 				
-				<s:iterator value="#topicList">
+				<c:forEach  items="${pageBean.list}" var="topic" varStatus="status">
 					<tr height="35" id="d0" class="template">
 						<td></td>
-						<td class="ForumTopicPageDataLine" align="center"><img src="${pageContext.request.contextPath}/style/images/topicType_${type}.gif" /></td>
+						<td class="ForumTopicPageDataLine" align="center"><img src="${pageContext.request.contextPath}/style/images/topicType_${topic.type}.gif" /></td>
 						<td class="Topic">
-							<s:a cssClass="Default" action="topicAction_show?id=%{id}">${title}</s:a>
+							<a class="Default" href="${pageContext.request.contextPath}/topic_show?id=${topic.id}&pageNow=1">${topic.title}</a>
 						</td>
 						<td class="ForumTopicPageDataLine">
 							<ul class="ForumPageTopicUl">
-								<li class="Author">${author.name}</li>
-								<li class="CreateTime"><s:date name="postTime" format="yyyy-MM-dd HH:mm:ss"/> </li>
+								<li class="Author">${topic.author.name}</li>
+								<li class="CreateTime">${topic.pushTime}</li>
 							</ul>
 						</td>
 						<td class="ForumTopicPageDataLine Reply" align="center"><b>${replyCount}</b></td>
 						<td class="ForumTopicPageDataLine">
 							<ul class="ForumPageTopicUl">
-								<li class="Author">${lastReply.author.name}</li>
-								<li class="CreateTime"><s:date name="lastReply.postTime" format="yyyy-MM-dd HH:mm:ss"/></li>
+								<li class="Author">${topic.lastReply.author.name}</li>
+								<li class="CreateTime">${topic.lasetUpdate}
+										</li>
+
 							</ul>
 						</td>
 						<td></td>
 					</tr>
-				</s:iterator>	
+				</c:forEach>
 					
 				</tbody>
 				<!--主题列表结束-->	
@@ -99,7 +103,8 @@
 				<tr height="3"><td colspan="9"></td></tr>
 				
 			</table>
-			
+
+
 			<!--其他操作-->
 			<div id="TableTail">
 				<div id="TableTail_inside">
@@ -132,41 +137,12 @@
 </div>
 
 <!--分页信息-->
-<div id=PageSelectorBar>
-	<div id=PageSelectorMemo>
-		页次：7/13页 &nbsp;
-		每页显示：30条 &nbsp;
-		总记录数：385条
-	</div>
-	<div id=PageSelectorSelectorArea>
-		<!--
-		<IMG SRC="${pageContext.request.contextPath}/style/blue/images/pageSelector/firstPage2.png"/>
-		-->
-		<a href="javascript:void(0)" title="首页" style="cursor: hand;">
-			<img src="${pageContext.request.contextPath}/style/blue/images/pageSelector/firstPage.png"/></a>
-		
-		<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">3</span>
-		<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">4</span>
-		<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">5</span>
-		<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">6</span>
-		<span class="PageSelectorNum PageSelectorSelected">7</span>
-		<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">8</span>
-		<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">9</span>
-		<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">10</span>
-		<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">11</span>
-		<span class="PageSelectorNum" style="cursor: hand;" onClick="gotoPage(2);">12</span>
-		
-		<!--
-		<IMG SRC="${pageContext.request.contextPath}/style/blue/images/pageSelector/lastPage2.png"/>
-		-->
-		<a href="#" title="尾页" style="cursor: hand;">
-			<img src="${pageContext.request.contextPath}/style/blue/images/pageSelector/lastPage.png"/></a>
-		
-		转到：
-		<input onFocus="this.select();" maxlength="3" class="inputStyle" type="text" value="1" id="pn"/>
-		<input type="submit" value="Go" class="MiddleButtonStyle" />
-	</div>
-</div>
+<%@ include file="/WEB-INF/jsp/public/pageView.jspf" %>
+<script type="text/javascript">
+    function gotoPage(pageNum) {
+        window.location.href = "forum_show.action?id=${id}&pageNow=" + pageNum;
+    }
+</script>
 
 <div class="Description">
 	说明：<br />

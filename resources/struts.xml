@@ -3,10 +3,28 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-    <package name="oa" namespace="/" extends="struts-default">
+    <!--创建一个默认的包-->
+    <package name="oa_default" namespace="/interceptor" extends="struts-default">
+        <interceptors>
+            <interceptor name="privilegeInterceptor" class="com.hjy.oa.intercepter.PrivilegeInterceptor"/>
+            <interceptor-stack name="completeStackWithLoginAuth">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="privilegeInterceptor"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="completeStackWithLoginAuth"/>
+        <global-results>
+            <result name="login">WEB-INF/jsp/user/loginUI.jsp</result>
+        </global-results>
+    </package>
+
+
+    <package name="oa" namespace="/" extends="oa_default">
         <interceptors>
             <interceptor name="privilegeInterceptor" class="com.hjy.oa.intercepter.PrivilegeInterceptor"/>
         </interceptors>
+
+        <default-action-ref name="user_loginUI"></default-action-ref>
         <action name="home_*" method="{1}" class="com.hjy.oa.action.HomeAction">
             <result name="{1}">/WEB-INF/jsp/home/{1}.jsp</result>
         </action>
@@ -16,11 +34,10 @@
             <result name="tolist" type="redirectAction">position_list.action</result>
         </action>
 
+        <!--            用户版块-->
         <action name="user_*" class="com.hjy.oa.action.UserAction" method="{1}">
             <!--<interceptor-ref name="defaultStack"/>-->
             <!--<interceptor-ref name="privilegeInterceptor">-->
-                <!--<param name="includeMethods">login</param>-->
-                <!--<param name="includeMethods">loginUI</param>-->
             <!--</interceptor-ref>-->
             <result name="{1}">/WEB-INF/jsp/user/{1}.jsp</result>
             <result name="loginfail" type="redirectAction">user_loginUI.action</result>
@@ -37,9 +54,24 @@
             <result name="{1}">/WEB-INF/jsp/forumManage/{1}.jsp</result>
             <result name="tolist" type="redirectAction">forumManage_list.action</result>
         </action>
-
+        <!--           论坛模块版块-->
         <action name="forum_*" class="com.hjy.oa.action.ForumAction" method="{1}">
             <result name="{1}">/WEB-INF/jsp/forum/{1}.jsp</result>
+        </action>
+        <!--         主题版块-->
+        <action name="topic_*" class="com.hjy.oa.action.TopicAction" method="{1}">
+            <result name="{1}">/WEB-INF/jsp/topic/{1}.jsp</result>
+            <result name="add" type="redirectAction">forum_show.action?id=${forumId}</result>
+            <result name="modify" type="redirectAction">forum_show.action?id=${forumId}</result>
+        </action>
+        <!--         回复版块-->
+        <action name="reply_*" class="com.hjy.oa.action.ReplyAction" method="{1}">
+            <result name="{1}">/WEB-INF/jsp/reply/{1}.jsp</result>
+            <result name="add" type="redirectAction"><!--topic_show.action?id=${topicId}pageNow=1-->
+                <param name="actionName">topic_show.action</param>
+                <param name="id">${topicId}</param>
+                <param name="pageNow">1</param>
+            </result>
         </action>
     </package>
 </struts>

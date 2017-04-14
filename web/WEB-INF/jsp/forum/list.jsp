@@ -42,7 +42,7 @@
 						<td class="ForumPageTableDataLine">
 							<ul class="ForumPageTopicUl">
 								<li class="ForumPageTopic">
-									<s:a action="forum_show?id=%{id}" cssClass="ForumPageTopic">${name}</s:a>
+									<s:a action="forum_show?id=%{id}&pageNow=1" cssClass="ForumPageTopic">${name}</s:a>
 								</li>
 								<li class="ForumPageTopicMemo">${description}</li>
 							</ul>
@@ -55,7 +55,7 @@
 									<s:a cssClass="ForumTitle" action="topic_show?id=%{lastTopic.id}">${lastTopic.title}</s:a>
 								</li>
 								<li><font color="#444444">├ 作者：</font> ${lastTopic.author.name}</li>
-								<li><font color="#444444">└ 时间：</font> <s:date name="%{lastTopic.postTime}" format="yyyy-MM-dd HH:mm:ss"/></li>
+								<li><font color="#444444">└ 时间：</font> <s:date name="%{lastTopic.pushTime}" format="yyyy-MM-dd HH:mm:ss"/></li>
 							</ul>
 						</td>
 						<td width="3"></td>

@@ -18,7 +18,7 @@
         </set>
 
         <!--自身表之间的映射，父表对应子表-->
-        <set name="children"  lazy="false">
+        <set name="children"  lazy="false" order-by="id">
             <key column="parentId"></key>
             <one-to-many class="com.hjy.oa.entity.Privilege"></one-to-many>
         </set>

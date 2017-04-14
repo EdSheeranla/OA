@@ -1,7 +1,10 @@
 package com.hjy.oa.dao.Impl;
 
 import com.hjy.oa.dao.BaseDao;
+import com.hjy.oa.dto.PageBean;
 import com.hjy.oa.entity.Privilege;
+import com.hjy.oa.entity.Topic;
+import com.hjy.oa.util.HibernateCallBackUtil;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +60,22 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T>{
     public List<T> findAll() {
         return (List<T>) hibernateTemplate.find("from "+clazz.getSimpleName());
     }
+
+
+
+//    public PageBean<T> findByPage(T t, PageBean<T> pageBean,String hql) {
+//        HibernateTemplate hibernateTemplate=getHibernateTemplate();
+//        Object[] parameters={t};
+//        hibernateTemplate.execute(new HibernateCallBackUtil<T>(pageBean.getBeginPage(),pageBean.getEndPage(),hql,parameters));
+//        List<T> list = hibernateTemplate.execute(new HibernateCallBackUtil<T>(pageBean.getBeginPage(), pageBean.getEndPage(), hql, parameters));
+//        List<Long> list1 = (List<Long>) hibernateTemplate.find("SELECT count (*) from Reply where topic =?", t);
+//        if (list1.size() != 0 || list1 != null) {
+//            Number number = list1.get(0);
+//            pageBean.setRowCount(number.intValue());
+//        }
+//        pageBean.setList(list);
+//        return pageBean;
+//    }
 
 
 }

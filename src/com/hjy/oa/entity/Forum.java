@@ -83,4 +83,14 @@ public class Forum {
         this.description = description;
     }
 
+    /**
+     * 当增加一个新的topic的时候，更新forum中的topic
+     * @param topic
+     */
+    public void updateLastTopic(Topic topic) {
+        if(topic==null) throw new IllegalArgumentException("topic can`t be Null");
+        this.setArticleCount(this.getArticleCount()+1);
+        this.setTopicCount(this.getTopicCount()+1);
+        this.setLastTopic(topic);
+    }
 }

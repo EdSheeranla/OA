@@ -32,6 +32,12 @@ public class UserServiceImpl extends BaseDaoImpl<User> implements UserService {
         return getUser();
     }
 
+    @Override
+    public void add(User user) {
+
+        super.add(user);
+    }
+
     private User getUser() {
         if (list == null || list.size() == 0) {
             return null;

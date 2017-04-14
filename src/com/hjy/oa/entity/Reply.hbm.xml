@@ -16,6 +16,6 @@
         <many-to-one name="author" class="com.hjy.oa.entity.User" column="authorid"/>
 
 
-        <many-to-one name="topic" class="com.hjy.oa.entity.Topic" column="topicid" ></many-to-one>
+        <many-to-one name="topic" class="com.hjy.oa.entity.Topic" column="topicid" cascade="save-update"></many-to-one>
     </class>
 </hibernate-mapping>

@@ -38,6 +38,7 @@ public class HomeAction extends BasicAction<Privilege>{
         if( ServletActionContext.getServletContext().getAttribute("allUserPrivilegeList")!=null){
             return "left";
         }
+        // Todo 这里采用listener准备权限更好
         User user = (User) ActionContext.getContext().getSession().get("user");
         List<Privilege> topPrivilegeList=privilegeService.findAllTop();
         Set<Privilege> allUserPrivilege=new HashSet<Privilege>();

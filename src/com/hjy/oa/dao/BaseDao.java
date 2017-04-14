@@ -1,5 +1,6 @@
 package com.hjy.oa.dao;
 
+import com.hjy.oa.dto.PageBean;
 import com.hjy.oa.entity.Privilege;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface BaseDao <T>{
     void del(T t);
     void add(T t);
     List<T> findAll();
-
+//    PageBean<T> findByPage(T t,PageBean<T> pageBean,String hql);
 }

@@ -7,7 +7,9 @@
         <id name="id">
             <generator class="native"/>
         </id>
+        <property name="isTop" />
         <!--由继承而得到的属性-->
+
         <property name="content" type="text" length="65535"/>
         <property name="emoji"/>
         <property name="ipAddres"/>
@@ -18,7 +20,7 @@
         <property name="lasetUpdate" type="timestamp"/>
         <property name="replyCount"/>
         <property name="type"/>
-        <many-to-one name="forum" column="forumid" class="com.hjy.oa.entity.Forum"/>
+        <many-to-one name="forum" column="forumid" cascade="save-update" class="com.hjy.oa.entity.Forum"/>
         <set name="replySet">
             <!--这里是对应的外键-->
             <key column="replyId"></key>

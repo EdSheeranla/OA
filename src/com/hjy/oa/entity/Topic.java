@@ -7,17 +7,26 @@ import java.util.Set;
 /**
  * Created by sheeran on 2017/3/26.
  */
-public class Topic extends Article{
-    private static final int TYPE_NORMAL=0;
-    private static final int TYPE_WONDFUL=1;
-    private static final int TYPE_TOP=2;
+public class Topic extends Article {
+    public static final int TYPE_NORMAL = 0;
+    public static final int TYPE_WONDFUL = 1;
+    public static final int TYPE_TOP = 2;
+
     private int id;
     private int type;
+    private int isTop;
     private int replyCount;
     private Date lasetUpdate;
-    private Set<Reply> replySet=new HashSet<Reply>();
+    private Set<Reply> replySet = new HashSet<Reply>();
     private Forum forum;
     private Reply lastReply;
+
+    public int getIsTop() {
+        return isTop;
+    }
+    public void setIsTop(int isTop) {
+        this.isTop = isTop;
+    }
 
     public Reply getLastReply() {
         return lastReply;
@@ -73,5 +82,17 @@ public class Topic extends Article{
 
     public void setForum(Forum forum) {
         this.forum = forum;
+    }
+
+    /**
+     * 当添加新的回复的时候更新topic
+     * @param reply
+     */
+    public void updateLastReply(Reply reply) {
+        setLasetUpdate(reply.getPushTime());
+        setLastReply(reply);
+        setReplyCount(getReplyCount()+1);
+        getReplySet().add(reply);
+
     }
 }

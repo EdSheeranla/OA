@@ -1,16 +1,38 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 2017/3/17
-  Time: 14:41
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <meta charset="utf-8">
+    <title>A Simple Page with CKEditor</title>
+    <!-- Make sure the path to CKEditor is correct. -->
+    <!--<script src="C:/Users/admin/Desktop/ckEditor_Test/ckeditor.js"></script>-->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/ckEditor/ckeditor.js"></script>
+
+    <!--<script src="C:/Users/admin/Desktop/ckEditor_Test/config.js"></script>-->
+
+
 </head>
 <body>
-    配置struts2成功
+<form>
+            <textarea name="editor1" id="editor1" rows="10" cols="80">
+                This is my textarea to be replaced with CKEditor.
+            </textarea>
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace( 'editor1');
+    </script>
+</form>
+<form>
+            <textarea id="content" name="content" style="width:650px;height:200px;">
+                second textArea!!!
+            </textarea>
+    <!--<textarea id="content" name="content"></textarea>&#45;&#45;%>-->
+    <%--<!--<%&#45;&#45;使用ckEditor编辑器&#45;&#45;%>-->--%>
+    <script>
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('content');
+    </script>
+</form>
 </body>
 </html>

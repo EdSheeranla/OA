@@ -13,9 +13,9 @@
         <property name="articleCount"/>
         <property name="topicCount"/>
         <set name="topicSet">
-            <key column="id"></key>
+            <key column="forumid"></key>
             <one-to-many class="com.hjy.oa.entity.Topic"/>
         </set>
-        <many-to-one  name="lastTopic"  column="lastTopicId" class="com.hjy.oa.entity.Topic" />
+        <many-to-one  name="lastTopic"  column="lastTopicId" class="com.hjy.oa.entity.Topic" unique="true"/>
     </class>
 </hibernate-mapping>
